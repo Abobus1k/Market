@@ -1,0 +1,46 @@
+package ru.example.megamarket.deposit;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.stereotype.Service;
+import ru.example.megamarket.user.User;
+import ru.example.megamarket.user.UserRepository;
+
+import java.security.Principal;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class DepositService {
+
+    private final DepositRepository depositRepository;
+    private final UserRepository userRepository;
+    private final DepositMapper mapper;
+
+    public void addDeposit(DepositRequest request, Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        Deposit deposit = mapper.depositRequestToDeposit(request);
+        deposit.setUser(user);
+        depositRepository.save(deposit);
+    }
+
+    public void adminDeleteDeposit(Integer depositId, Boolean approved) {
+        Deposit deposit = depositRepository.findById(depositId).orElseThrow();
+
+        if (approved) {
+            User user = userRepository.findById(deposit.getUser().getId()).orElseThrow();
+            user.setBalance(user.getBalance() + deposit.getSum());
+            userRepository.save(user);
+        }
+
+        depositRepository.delete(deposit);
+    }
+
+    public List<Deposit> adminGetAllDeposits() {
+        return depositRepository.findAll();
+    }
+
+    public Deposit adminGetDeposit(Integer depositId) {
+        return depositRepository.findById(depositId).orElseThrow();
+    }
+}
