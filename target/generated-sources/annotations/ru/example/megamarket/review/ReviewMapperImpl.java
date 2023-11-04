@@ -6,7 +6,7 @@ import ru.example.megamarket.user.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-31T14:16:52+0100",
+    date = "2023-11-04T13:33:18+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 18.0.2-ea (Private Build)"
 )
 @Component

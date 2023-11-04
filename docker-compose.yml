@@ -7,12 +7,12 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8003:8003"
     depends_on:
       service-db:
         condition: service_healthy
     environment:
-      - SERVER_PORT= 8000
+      - SERVER_PORT= 8003
       - SPRING.DATASOURCE.URL=jdbc:postgresql://service-db/megamarket
 
   service-db:

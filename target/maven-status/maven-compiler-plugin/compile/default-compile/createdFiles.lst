@@ -33,6 +33,7 @@ ru/example/megamarket/withdraw/WithdrawRequest.class
 ru/example/megamarket/user/AdminUserController.class
 ru/example/megamarket/auth/AuthenticationResponse.class
 ru/example/megamarket/user/User.class
+ru/example/megamarket/config/MvcConfig.class
 ru/example/megamarket/token/TokenType.class
 ru/example/megamarket/image/ImageResponse.class
 ru/example/megamarket/listing/Listing$ListingBuilder.class

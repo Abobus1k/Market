@@ -22,6 +22,7 @@
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/withdraw/Withdraw.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/image/ImageService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/category/AdminCategoryController.java
+/home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/config/MvcConfig.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/category/CategoryService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/withdraw/WithdrawService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/config/ApplicationConfig.java

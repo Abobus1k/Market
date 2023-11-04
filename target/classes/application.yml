@@ -1,9 +1,9 @@
 server:
-  port: 8000
+  port: 8003
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/market
+    url: jdbc:postgresql://localhost:5433/megamarket
     username: aobubu
     password: java
 
@@ -17,7 +17,7 @@ spring:
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-POSTGRESQL_DATABASE: market
+POSTGRESQL_DATABASE: megamarket
 POSTGRESQL_USERNAME: aobubu
 POSTGRESQL_PASSWORD: java
 
