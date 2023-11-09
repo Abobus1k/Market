@@ -1,9 +1,6 @@
 package ru.example.megamarket.listing;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +22,7 @@ public class ListingRequest {
     @NotEmpty(message = "У товара должна быть категория")
     private Integer categoryId;
 
-    @NotEmpty(message = "У товара должна быть цена")
+    @NotNull(message = "У товара должна быть цена")
     @Min(value = 1, message = "Недопустимая цена")
     private Integer price;
 }

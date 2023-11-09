@@ -19,7 +19,7 @@ public class MegamarketApplication {
         SpringApplication.run(MegamarketApplication.class, args);
     }
 
-    @Bean
+    /*@Bean
     public CommandLineRunner commandLineRunner(
             AuthenticationService service
     ) {
@@ -32,5 +32,5 @@ public class MegamarketApplication {
                     .build();
             System.out.println("Admin token: " + service.register(admin).getAccessToken());
         };
-    }
+    }*/
 }
