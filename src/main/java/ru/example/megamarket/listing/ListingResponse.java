@@ -1,5 +1,6 @@
 package ru.example.megamarket.listing;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,7 @@ public class ListingResponse {
     private String text;
     private String categoryId;
     private Integer price;
-    private String city;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime postDate;
     private Boolean sold;
     private Integer userId;

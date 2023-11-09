@@ -40,8 +40,6 @@ public class Listing {
 
     private Integer price;
 
-    private String city;
-
     private LocalDateTime postDate;
 
     private Boolean sold;

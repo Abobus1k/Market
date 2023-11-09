@@ -1,5 +1,8 @@
 package ru.example.megamarket.review;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +14,13 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
+@Tag(name = "review", description = "Работа с отзывами")
 public class ReviewController {
     private final ReviewService service;
     private final ReviewMapper mapper;
 
     @GetMapping("/{sellerId}")
+    @Operation(description = "Просмотр отзывов о продавце")
     public List<ReviewResponse> getReviews(@PathVariable Integer sellerId) {
         return service.getAllSellerReviews(sellerId)
                 .stream()
@@ -24,13 +29,15 @@ public class ReviewController {
     }
 
     @PostMapping("/{sellerId}")
-    public ResponseEntity<Void> createReview(ReviewRequest request, @PathVariable Integer sellerId, Principal connectedUser) {
+    @Operation(description = "Создание отзыва о продавце")
+    public ResponseEntity<Void> createReview(@RequestBody @Valid ReviewRequest request, @PathVariable Integer sellerId, Principal connectedUser) {
         request.setSellerId(sellerId);
         service.addReview(request, connectedUser);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
+    @Operation(description = "Просмотр отзывов о текущем пользователе")
     public List<ReviewResponse> getUserReviews(Principal connectedUser) {
         return service.getAllSellerReviews(connectedUser)
                 .stream()

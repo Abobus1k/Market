@@ -1,6 +1,7 @@
 package ru.example.megamarket.image;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ImageRequest {
+    @NotEmpty(message = "Путь до фотографии не заполнен")
     private String path;
+
     @JsonIgnore
+    @NotEmpty
     private Integer listingId;
 }

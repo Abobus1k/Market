@@ -22,8 +22,10 @@ ru/example/megamarket/listing/ListingRequest.class
 ru/example/megamarket/auth/AuthenticationService.class
 ru/example/megamarket/auth/AuthenticationRequest$AuthenticationRequestBuilder.class
 ru/example/megamarket/category/Category$CategoryBuilder.class
+ru/example/megamarket/exceptions/localexceptions/ExtraReviewException.class
 ru/example/megamarket/auth/AuthenticationController.class
 ru/example/megamarket/auth/AuthenticationRequest.class
+ru/example/megamarket/exceptions/HandleErrorService.class
 ru/example/megamarket/image/ImageMapper.class
 ru/example/megamarket/withdraw/WithdrawService.class
 ru/example/megamarket/user/User$UserBuilder.class
@@ -40,6 +42,7 @@ ru/example/megamarket/listing/Listing$ListingBuilder.class
 ru/example/megamarket/deposit/DepositRepository.class
 ru/example/megamarket/withdraw/AdminWithdrawController.class
 ru/example/megamarket/user/Role.class
+ru/example/megamarket/exceptions/localexceptions/ListingAlreadyPurchaseException.class
 ru/example/megamarket/order/OrderMapper.class
 ru/example/megamarket/config/OpenApiConfig.class
 ru/example/megamarket/category/AdminCategoryController.class
@@ -68,8 +71,10 @@ ru/example/megamarket/MegamarketApplication.class
 ru/example/megamarket/category/CategoryRequest.class
 ru/example/megamarket/withdraw/Withdraw$WithdrawBuilder.class
 ru/example/megamarket/order/OrderController.class
+ru/example/megamarket/exceptions/localexceptions/DuplicateException.class
 ru/example/megamarket/review/ReviewMapper.class
 ru/example/megamarket/review/Review$ReviewBuilder.class
+ru/example/megamarket/exceptions/localexceptions/InsufficientFundsException.class
 ru/example/megamarket/image/ImageMapperImpl.class
 ru/example/megamarket/user/UserRepository.class
 ru/example/megamarket/user/UserController.class

@@ -1,10 +1,13 @@
 package ru.example.megamarket.listing;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.category.Category;
 import ru.example.megamarket.category.CategoryRepository;
+import ru.example.megamarket.exceptions.localexceptions.InsufficientFundsException;
+import ru.example.megamarket.exceptions.localexceptions.ListingAlreadyPurchaseException;
 import ru.example.megamarket.order.Order;
 import ru.example.megamarket.order.OrderRepository;
 import ru.example.megamarket.user.User;
@@ -24,57 +27,13 @@ public class ListingService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final OrderRepository orderRepository;
-//    public List<Listing> getSearchListings(Integer categoryId, Boolean priceOrder, Boolean postDateOrder) {
-//        if (priceOrder == null && postDateOrder == null) {
-//            return categoryId == null ? repository.findBySold(false) :
-//                    repository.findByCategoryAndSold(categoryRepository.findById(categoryId).orElseThrow(), false);
-//
-//        }
-//
-//        if (priceOrder != null && postDateOrder != null) {
-//            return categoryId == null ? repository.findBySold(false)
-//                    .stream()
-//                    .sorted(Comparator
-//                            .comparing(Listing::getPostDate, postDateOrder ? Comparator.naturalOrder() : Comparator.reverseOrder())
-//                            .thenComparing(Listing::getPrice, priceOrder ? Comparator.naturalOrder() : Comparator.reverseOrder()))
-//                    .collect(Collectors.toList()) :
-//                        repository.findByCategoryAndSold(categoryRepository.findById(categoryId).orElseThrow(), false)
-//                                .stream()
-//                                .sorted(Comparator
-//                                        .comparing(Listing::getPostDate, postDateOrder ? Comparator.naturalOrder() : Comparator.reverseOrder())
-//                                        .thenComparing(Listing::getPrice, priceOrder ? Comparator.naturalOrder() : Comparator.reverseOrder()))
-//                                .collect(Collectors.toList());
-//        }
-//
-//        if (priceOrder != null) {
-//            return categoryId == null ? repository.findBySold(false)
-//                    .stream()
-//                    .sorted(Comparator
-//                            .comparing(Listing::getPrice, priceOrder ? Comparator.naturalOrder() : Comparator.reverseOrder()))
-//                    .collect(Collectors.toList()) :
-//                        repository.findByCategoryAndSold(categoryRepository.findById(categoryId).orElseThrow(), false)
-//                                .stream()
-//                                .sorted(Comparator
-//                                        .comparing(Listing::getPrice, priceOrder ? Comparator.naturalOrder() : Comparator.reverseOrder()))
-//                                .collect(Collectors.toList());
-//        }
-//
-//        return categoryId == null ? repository.findBySold(false)
-//                .stream()
-//                .sorted(Comparator
-//                        .comparing(Listing::getPostDate, postDateOrder ? Comparator.naturalOrder() : Comparator.reverseOrder()))
-//                .collect(Collectors.toList()) :
-//                repository.findByCategoryAndSold(categoryRepository.findById(categoryId).orElseThrow(), false)
-//                        .stream()
-//                        .sorted(Comparator
-//                                .comparing(Listing::getPostDate, postDateOrder ? Comparator.naturalOrder() : Comparator.reverseOrder()))
-//                        .collect(Collectors.toList());
-//    }
 
     public List<Listing> getSearchListings(Integer categoryId, Boolean priceOrder, Boolean postDateOrder) {
         List<Listing> listings = categoryId == null ?
                 repository.findBySold(false) :
-                repository.findByCategoryAndSold(categoryRepository.findById(categoryId).orElseThrow(), false);
+                repository.findByCategoryAndSold(categoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new EntityNotFoundException("Категории с id: " + categoryId + " не существует")),
+                        false);
 
         if (postDateOrder != null) {
             return listings.stream()
@@ -97,7 +56,8 @@ public class ListingService {
     }
 
     public List<Listing> getAllUserListings(Integer userId) {
-        return repository.findBySoldAndUser(false, userRepository.findById(userId).orElseThrow());
+        return repository.findBySoldAndUser(false, userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует")));
     }
 
     public void addListing(ListingRequest request, Principal connectedUser) {
@@ -111,16 +71,22 @@ public class ListingService {
 
     public void buyListingWithId(Integer listingId, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        Listing listing = repository.findById(listingId).orElseThrow();
+        Listing listing = repository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
 
-        if (user.getBalance() < listing.getPrice() || listing.getSold()) {
-            return;
+        if (listing.getSold()) {
+            throw new ListingAlreadyPurchaseException("Объявление c id: " + listingId + " уже продано");
+        }
+
+        if (user.getBalance() < listing.getPrice()) {
+            throw new InsufficientFundsException("Недостаточно средст для покупки");
         }
 
         listing.setSold(true);
         user.setBalance(user.getBalance() - listing.getPrice());
 
-        User seller = userRepository.findById(listing.getUser().getId()).orElseThrow();
+        User seller = userRepository.findById(listing.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Объявление привязано к несуществуещему пользователю"));
 
         Order order = new Order();
         order.setListing(listing);
@@ -135,13 +101,15 @@ public class ListingService {
 
     public void deleteListing(Integer listingId, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        Listing listing = repository.findById(listingId).orElseThrow();
+        Listing listing = repository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
         if (listing.getUser().getId().equals(user.getId())) {
             repository.delete(listing);
         }
     }
 
     public Listing getListing(Integer listingId) {
-        return repository.findById(listingId).orElseThrow();
+        return repository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
     }
 }

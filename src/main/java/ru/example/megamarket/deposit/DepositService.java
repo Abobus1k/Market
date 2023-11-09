@@ -1,5 +1,6 @@
 package ru.example.megamarket.deposit;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,8 @@ public class DepositService {
     }
 
     public void adminDeleteDeposit(Integer depositId, Boolean approved) {
-        Deposit deposit = depositRepository.findById(depositId).orElseThrow();
+        Deposit deposit = depositRepository.findById(depositId)
+                .orElseThrow(() -> new EntityNotFoundException("Депозита с id: " + depositId + " не существует"));
 
         if (approved) {
             User user = userRepository.findById(deposit.getUser().getId()).orElseThrow();
@@ -41,6 +43,7 @@ public class DepositService {
     }
 
     public Deposit adminGetDeposit(Integer depositId) {
-        return depositRepository.findById(depositId).orElseThrow();
+        return depositRepository.findById(depositId)
+                .orElseThrow(() -> new EntityNotFoundException("Депозита с id: " + depositId + " не существует"));
     }
 }

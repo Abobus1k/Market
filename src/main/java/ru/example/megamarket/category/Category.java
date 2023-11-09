@@ -21,6 +21,7 @@ public class Category {
     @Column(name = "category_id")
     private Integer id;
 
+    @Column(name = "name", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)

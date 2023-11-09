@@ -14,15 +14,18 @@
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/listing/ListingResponse.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/user/UserMapper.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/deposit/AdminDepositController.java
+/home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/exceptions/localexceptions/ExtraReviewException.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/config/SecurityConfiguration.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/category/CategoryRepository.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/listing/ListingController.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/listing/ListingRequest.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/withdraw/WithdrawResponse.java
+/home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/exceptions/localexceptions/ListingAlreadyPurchaseException.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/withdraw/Withdraw.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/image/ImageService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/category/AdminCategoryController.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/config/MvcConfig.java
+/home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/exceptions/HandleErrorService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/category/CategoryService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/withdraw/WithdrawService.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/config/ApplicationConfig.java
@@ -52,6 +55,7 @@
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/user/UserRequest.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/deposit/Deposit.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/auth/AuthenticationService.java
+/home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/exceptions/localexceptions/DuplicateException.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/user/AdminUserController.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/user/UserResponse.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/token/Token.java
@@ -62,6 +66,7 @@
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/review/ReviewResponse.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/listing/ListingMapper.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/deposit/DepositMapper.java
+/home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/exceptions/localexceptions/InsufficientFundsException.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/deposit/DepositRequest.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/token/TokenRepository.java
 /home/aobubu/IdeaProjects/megamarket/src/main/java/ru/example/megamarket/user/Permission.java

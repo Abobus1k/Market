@@ -1,5 +1,6 @@
 package ru.example.megamarket.image;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -30,19 +31,28 @@ public class ImageService {
     }
 
     public Image getImage(Integer imageId) {
-        return repository.findById(imageId).orElseThrow();
+        return repository.findById(imageId)
+                .orElseThrow(() -> new EntityNotFoundException("Изображения с id: " + imageId + " не существует"));
     }
 
     public List<Image> getImages(Integer listingId) {
-        Listing listing = listingRepository.findById(listingId).orElseThrow();
+        Listing listing = listingRepository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
+
         return repository.findByListing(listing);
     }
 
     public void deleteImage(Integer imageId, Principal connectedUser) {
         var currentUser = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        Image image = repository.findById(imageId).orElseThrow();
-        Listing listing = listingRepository.findById(image.getListing().getId()).orElseThrow();
-        User user = userRepository.findById(listing.getUser().getId()).orElseThrow();
+        Image image = repository.findById(imageId)
+                .orElseThrow(() -> new EntityNotFoundException("Изображения с id: " + imageId + " не существует"));
+
+        Listing listing = listingRepository.findById(image.getListing().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Изображение привязано к несуществующему объявлению"));
+
+        User user = userRepository.findById(listing.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Объявление принадлежит к несуществующему пользователю"));
+
         if (user.getId().equals(currentUser.getId())) {
             repository.delete(image);
         }

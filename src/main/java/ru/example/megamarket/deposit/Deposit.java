@@ -23,5 +23,6 @@ public class Deposit {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(name = "sum")
     private Integer sum;
 }

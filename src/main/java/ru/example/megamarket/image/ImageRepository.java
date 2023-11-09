@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ImageRepository extends JpaRepository<Image, Integer> {
     List<Image> findByListing(Listing listing);
+
+    Boolean existsByListing(Listing listing);
 }

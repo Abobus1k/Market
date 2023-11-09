@@ -1,8 +1,10 @@
 package ru.example.megamarket.withdraw;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import ru.example.megamarket.exceptions.localexceptions.InsufficientFundsException;
 import ru.example.megamarket.user.User;
 import ru.example.megamarket.user.UserRepository;
 
@@ -21,7 +23,7 @@ public class WithdrawService {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
         if (user.getBalance() < request.getSum()) {
-            return;
+            throw new InsufficientFundsException("Недостаточно средст для покупки");
         }
 
         Withdraw withdraw = mapper.withdrawRequestToWithdraw(request);
@@ -30,7 +32,8 @@ public class WithdrawService {
     }
 
     public void adminDeleteWithdraw(Integer withdrawId, Boolean approved) {
-        Withdraw withdraw = withdrawRepository.findById(withdrawId).orElseThrow();
+        Withdraw withdraw = withdrawRepository.findById(withdrawId)
+                .orElseThrow(() -> new EntityNotFoundException("Заявки на вывод средств с id: " + withdrawId + " не существует"));
 
         if (approved) {
             User user = userRepository.findById(withdraw.getUser().getId()).orElseThrow();
@@ -46,6 +49,7 @@ public class WithdrawService {
     }
 
     public Withdraw adminGetWithdraw(Integer withdrawId) {
-        return withdrawRepository.findById(withdrawId).orElseThrow();
+        return withdrawRepository.findById(withdrawId)
+                .orElseThrow(() -> new EntityNotFoundException("Заявки на вывод средств с id: " + withdrawId + " не существует"));
     }
 }

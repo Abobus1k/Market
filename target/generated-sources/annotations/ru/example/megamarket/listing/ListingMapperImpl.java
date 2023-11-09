@@ -7,7 +7,7 @@ import ru.example.megamarket.user.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-11-04T13:33:19+0100",
+    date = "2023-11-09T15:55:25+0100",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 18.0.2-ea (Private Build)"
 )
 @Component
@@ -30,7 +30,6 @@ public class ListingMapperImpl implements ListingMapper {
         listingResponse.setTitle( listing.getTitle() );
         listingResponse.setText( listing.getText() );
         listingResponse.setPrice( listing.getPrice() );
-        listingResponse.setCity( listing.getCity() );
         listingResponse.setPostDate( listing.getPostDate() );
         listingResponse.setSold( listing.getSold() );
 
@@ -49,7 +48,6 @@ public class ListingMapperImpl implements ListingMapper {
         listing.title( request.getTitle() );
         listing.text( request.getText() );
         listing.price( request.getPrice() );
-        listing.city( request.getCity() );
 
         return listing.build();
     }

@@ -1,5 +1,8 @@
 package ru.example.megamarket.image;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +14,14 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/v1/images")
 @RequiredArgsConstructor
+@Tag(name = "image", description = "Работа с фотографиями")
 public class ImageController {
     private final ImageService service;
     private final ImageMapper mapper;
 
     @PostMapping("/{listingId}")
-    public ResponseEntity<Void> uploadImage(@RequestBody ImageRequest request,
+    @Operation(description = "Добавление изображения к объявлению")
+    public ResponseEntity<Void> uploadImage(@RequestBody @Valid ImageRequest request,
                                             @PathVariable Integer listingId,
                                             Principal connectedUser) {
         request.setListingId(listingId);
@@ -25,6 +30,7 @@ public class ImageController {
     }
 
     @GetMapping("/{listingId}")
+    @Operation(description = "Просмотр изображений объявления")
     public List<ImageResponse> getListingImages(@PathVariable Integer listingId) {
         return service.getImages(listingId).stream()
                 .map(mapper::imageToImageResponse)
@@ -32,13 +38,15 @@ public class ImageController {
     }
 
     @GetMapping("/watch/{imageId}")
+    @Operation(description = "Просмотр определенного изображения")
     public ImageResponse checkImage(@PathVariable Integer imageId) {
         return mapper.imageToImageResponse(service.getImage(imageId));
     }
 
     @DeleteMapping("/{imageId}")
+    @Operation(description = "Удаление изображения")
     public ResponseEntity<Void> removeImage(@PathVariable Integer imageId, Principal connectedUser) {
         service.deleteImage(imageId, connectedUser);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

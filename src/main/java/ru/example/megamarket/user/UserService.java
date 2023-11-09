@@ -1,5 +1,6 @@
 package ru.example.megamarket.user;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,12 +21,14 @@ public class UserService {
     }
 
     public void removeUser(Integer userId) {
-        User user = repository.findById(userId).orElseThrow();
+        User user = repository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует"));
         repository.delete(user);
     }
 
     public User userProfile(Integer userId) {
-        return repository.findById(userId).orElseThrow();
+        return repository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует"));
     }
 
     public User userProfile(Principal connectedUser) {

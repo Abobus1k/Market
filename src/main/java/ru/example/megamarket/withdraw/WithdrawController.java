@@ -1,5 +1,9 @@
 package ru.example.megamarket.withdraw;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,11 +16,13 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/api/v1/withdraws")
 @RequiredArgsConstructor
+@Tag(name = "withdraw", description = "Работа с выводом средств")
 public class WithdrawController {
     private final WithdrawService service;
 
     @PostMapping
-    public ResponseEntity<Void> createWithdraw(@RequestBody WithdrawRequest request, Principal connectedUser) {
+    @Operation(description = "Создание заявки на вывод средств")
+    public ResponseEntity<Void> createWithdraw(@RequestBody @Valid WithdrawRequest request, Principal connectedUser) {
         service.addWithdraw(request, connectedUser);
         return ResponseEntity.ok().build();
     }
