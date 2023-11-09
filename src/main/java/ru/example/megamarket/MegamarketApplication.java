@@ -19,18 +19,18 @@ public class MegamarketApplication {
         SpringApplication.run(MegamarketApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(
-            AuthenticationService service
-    ) {
-        return args -> {
-            var admin = RegisterRequest.builder()
-                    .firstname("Admin")
-                    .lastname("Admin")
-                    .email("admin@mail.com")
-                    .password("password")
-                    .build();
-            System.out.println("Admin token: " + service.register(admin).getAccessToken());
-        };
-    }
+//    @Bean
+//    public CommandLineRunner commandLineRunner(
+//            AuthenticationService service
+//    ) {
+//        return args -> {
+//            var admin = RegisterRequest.builder()
+//                    .firstname("Admin")
+//                    .lastname("Admin")
+//                    .email("admin@mail.com")
+//                    .password("password")
+//                    .build();
+//            System.out.println("Admin token: " + service.register(admin).getAccessToken());
+//        };
+//    }
 }
