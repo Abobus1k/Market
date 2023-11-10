@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/categories")
 @RequiredArgsConstructor
 @Tag(name = "category", description = "Работа с категориями")
 public class CategoryController {

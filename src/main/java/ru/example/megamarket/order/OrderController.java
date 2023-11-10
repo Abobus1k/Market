@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping("/api/orders")
 @RequiredArgsConstructor
 @Tag(name = "order", description = "Работа с историй покупок и продаж")
 public class OrderController {

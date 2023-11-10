@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 ),
                 @Server(
                         description = "PROD ENV",
-                        url = "http://nedomarket.ru:8003"
+                        url = "http://nedomarket.ru"
                 )
         },
         security = {

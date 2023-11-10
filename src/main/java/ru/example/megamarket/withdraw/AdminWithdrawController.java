@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/admin/withdraws")
+@RequestMapping("/api/admin/withdraws")
 @PreAuthorize("hasRole('ADMIN')")
 @RequiredArgsConstructor
 @Tag(name = "admin_withdraw", description = "Работа с выводами средств для админа")

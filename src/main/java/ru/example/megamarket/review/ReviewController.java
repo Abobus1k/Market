@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/reviews")
+@RequestMapping("/api/reviews")
 @RequiredArgsConstructor
 @Tag(name = "review", description = "Работа с отзывами")
 public class ReviewController {

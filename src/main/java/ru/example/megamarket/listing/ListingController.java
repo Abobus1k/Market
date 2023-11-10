@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/listings")
+@RequestMapping("/api/listings")
 @RequiredArgsConstructor
 @Tag(name = "listing", description = "Работа с объявлениями")
 public class ListingController {

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/admin/deposits")
+@RequestMapping("/api/admin/deposits")
 @PreAuthorize("hasRole('ADMIN')")
 @RequiredArgsConstructor
 @Tag(name = "admin_deposit", description = "Работа с депозитами для админа")

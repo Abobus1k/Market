@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("/api/v1/withdraws")
+@RequestMapping("/api/withdraws")
 @RequiredArgsConstructor
 @Tag(name = "withdraw", description = "Работа с выводом средств")
 public class WithdrawController {
