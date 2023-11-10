@@ -12,11 +12,11 @@ import ru.example.megamarket.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_deposit")
+@Table(name = "deposits")
 public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "deposit_id")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne

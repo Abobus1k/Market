@@ -1,10 +1,7 @@
 package ru.example.megamarket.token;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.example.megamarket.user.User;
 
 @Data
@@ -12,23 +9,28 @@ import ru.example.megamarket.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "tokens")
 public class Token {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     public Long id;
 
-    @Column(unique = true)
+    @Column(name = "token", unique = true)
     public String token;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "token_type")
     public TokenType tokenType = TokenType.BEARER;
 
+    @Column(name = "revoked")
     public boolean revoked;
 
+    @Column(name = "expired")
     public boolean expired;
 
     @ManyToOne(cascade = {CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     public User user;
 }

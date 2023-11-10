@@ -14,6 +14,5 @@ public class ImageRequest {
     private String path;
 
     @JsonIgnore
-    @NotEmpty
     private Integer listingId;
 }

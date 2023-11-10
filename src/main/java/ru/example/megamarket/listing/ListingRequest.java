@@ -19,7 +19,7 @@ public class ListingRequest {
     @Max(value = 400, message = "Недопустимое описание товара")
     private String text;
 
-    @NotEmpty(message = "У товара должна быть категория")
+    @NotNull(message = "У товара должна быть категория")
     private Integer categoryId;
 
     @NotNull(message = "У товара должна быть цена")

@@ -12,11 +12,11 @@ import ru.example.megamarket.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_review")
+@Table(name = "reviews")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id")
+    @Column(name = "id")
     private Integer id;
 
     private String text;

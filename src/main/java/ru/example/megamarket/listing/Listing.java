@@ -19,11 +19,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_listing")
+@Table(name = "listings")
 public class Listing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "listing_id")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne

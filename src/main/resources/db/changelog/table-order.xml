@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="Create orders table" author="aobubu">
+        <createTable tableName="orders">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="order_id"/>
+            </column>
+            <column name="seller_id" type="integer">
+                <constraints nullable="false" foreignKeyName="fr_seller_order" references="users(id)"/>
+            </column>
+            <column name="buyer_id" type="integer">
+                <constraints nullable="false" foreignKeyName="fr_buyer_order" references="users(id)"/>
+            </column>
+            <column name="listing_id" type="integer">
+                <constraints nullable="false" foreignKeyName="fr_listing_order" references="listings(id)"/>
+            </column>
+            <column name="sum" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
