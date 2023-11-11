@@ -66,7 +66,7 @@ public class HandleErrorService {
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(ExtraReviewException.class)
+    @ExceptionHandler(ImpossibleDealException.class)
     public ResponseEntity<Object> handleImpossibleDealException(ImpossibleDealException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("resultCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -74,7 +74,7 @@ public class HandleErrorService {
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(ExtraReviewException.class)
+    @ExceptionHandler(UnexpectedImageLoadException.class)
     public ResponseEntity<Object> handleUnexpectedImageLoadException(UnexpectedImageLoadException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("resultCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
