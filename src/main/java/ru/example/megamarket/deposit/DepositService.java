@@ -18,11 +18,11 @@ public class DepositService {
     private final UserRepository userRepository;
     private final DepositMapper mapper;
 
-    public void addDeposit(DepositRequest request, Principal connectedUser) {
+    public Deposit addDeposit(DepositRequest request, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         Deposit deposit = mapper.depositRequestToDeposit(request);
         deposit.setUser(user);
-        depositRepository.save(deposit);
+        return depositRepository.save(deposit);
     }
 
     public void adminDeleteDeposit(Integer depositId, Boolean approved) {

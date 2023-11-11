@@ -46,17 +46,15 @@ public class ListingController {
 
     @PostMapping
     @Operation(description = "Создание объявления")
-    public ResponseEntity<Void> createListing(@RequestBody @Valid ListingRequest request, Principal connectedUser) {
-        service.addListing(request, connectedUser);
-        return ResponseEntity.ok().build();
+    public ListingResponse createListing(@RequestBody @Valid ListingRequest request, Principal connectedUser) {
+        return mapper.listingToListingResponse(service.addListing(request, connectedUser));
     }
 
     // Добавить логику с orders
     @PostMapping("/{listingId}")
     @Operation(description = "Покупка объявления")
-    public ResponseEntity<Void> buyListing(@PathVariable Integer listingId, Principal connectedUser) {
-        service.buyListingWithId(listingId, connectedUser);
-        return ResponseEntity.ok().build();
+    public ListingResponse buyListing(@PathVariable Integer listingId, Principal connectedUser) {
+        return mapper.listingToListingResponse(service.buyListingWithId(listingId, connectedUser));
     }
 
     @DeleteMapping("/{listingId}")

@@ -19,11 +19,11 @@ import java.security.Principal;
 @Tag(name = "withdraw", description = "Работа с выводом средств")
 public class WithdrawController {
     private final WithdrawService service;
+    private final WithdrawMapper mapper;
 
     @PostMapping
     @Operation(description = "Создание заявки на вывод средств")
-    public ResponseEntity<Void> createWithdraw(@RequestBody @Valid WithdrawRequest request, Principal connectedUser) {
-        service.addWithdraw(request, connectedUser);
-        return ResponseEntity.ok().build();
+    public WithdrawResponse createWithdraw(@RequestBody @Valid WithdrawRequest request, Principal connectedUser) {
+        return mapper.withdrawToWithdrawResponse(service.addWithdraw(request, connectedUser));
     }
 }

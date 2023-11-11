@@ -20,7 +20,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
 
-    public void addReview(ReviewRequest request, Principal connectedUser) {
+    public Review addReview(ReviewRequest request, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         User seller = userRepository.findById(request.getSellerId())
                 .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + request.getSellerId() + " не существует"));
@@ -43,7 +43,7 @@ public class ReviewService {
 
         seller.setRating((seller.getRating() * numberOfSellerReviews + request.getRating()) / (numberOfSellerReviews + 1));
         userRepository.save(seller);
-        repository.save(review);
+        return repository.save(review);
     }
 
     public List<Review> getAllSellerReviews(Integer sellerId) {
@@ -55,5 +55,10 @@ public class ReviewService {
     public List<Review> getAllSellerReviews(Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         return repository.findBySeller(user);
+    }
+
+    public void deleteReview(Integer reviewId) {
+        repository.delete(repository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Отыва с id: " + reviewId + " не существует")));
     }
 }

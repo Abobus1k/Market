@@ -18,13 +18,13 @@ import java.util.stream.Collectors;
 @Tag(name = "admin_category", description = "Работа с категориями для админа")
 public class AdminCategoryController {
     private final CategoryService service;
+    private final CategoryMapper mapper;
 
     @PostMapping
     @PreAuthorize("hasAuthority('admin:create')")
     @Operation(description = "Создание категории")
-    public ResponseEntity<Void> createCategory(@RequestBody @Valid CategoryRequest request) {
-        service.addCategory(request);
-        return ResponseEntity.ok().build();
+    public CategoryResponse createCategory(@RequestBody @Valid CategoryRequest request) {
+        return mapper.categoryToCategoryResponse(service.addCategory(request));
     }
 
     @DeleteMapping("/{categoryId}")

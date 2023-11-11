@@ -2,8 +2,10 @@ package ru.example.megamarket.image;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 import ru.example.megamarket.listing.Listing;
 import ru.example.megamarket.listing.ListingRepository;
 import ru.example.megamarket.user.User;
@@ -20,13 +22,17 @@ public class ImageService {
     private final UserRepository userRepository;
     private final ImageMapper mapper;
 
-    public void addImage(ImageRequest request, Integer listingId, Principal connectedUser) {
+    public Image addImage(ImageRequest request, Integer listingId, Principal connectedUser) {
         var currentUser = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         Image image = mapper.imageRequestToImage(request);
         Listing listing = listingRepository.findById(listingId).orElseThrow();
         if (listing.getUser().getId().equals(currentUser.getId())) {
             image.setListing(listing);
-            repository.save(mapper.imageRequestToImage(request));
+            return repository.save(mapper.imageRequestToImage(request));
+        }
+        else {
+            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Попытка добавить другому пользователю изображение отклонена");
         }
     }
 

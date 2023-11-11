@@ -13,11 +13,11 @@ public class CategoryService {
     private final CategoryRepository repository;
     private final CategoryMapper mapper;
 
-    public void addCategory(CategoryRequest request) {
+    public Category addCategory(CategoryRequest request) {
         if (repository.existsByName(request.getName())) {
             throw new DuplicateException("Категория с названием " + request.getName() + " уже существует");
         }
-        repository.save(mapper.categoryRequestToCategory(request));
+        return repository.save(mapper.categoryRequestToCategory(request));
     }
 
     public List<Category> getAllCategories() {

@@ -60,16 +60,16 @@ public class ListingService {
                 .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует")));
     }
 
-    public void addListing(ListingRequest request, Principal connectedUser) {
+    public Listing addListing(ListingRequest request, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         Listing listing = mapper.ListingRequestToListing(request);
         listing.setPostDate(LocalDateTime.now());
         listing.setSold(false);
         listing.setUser(user);
-        repository.save(listing);
+        return repository.save(listing);
     }
 
-    public void buyListingWithId(Integer listingId, Principal connectedUser) {
+    public Listing buyListingWithId(Integer listingId, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         Listing listing = repository.findById(listingId)
                 .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
@@ -96,7 +96,7 @@ public class ListingService {
         orderRepository.save(order);
 
         userRepository.save(user);
-        repository.save(listing);
+        return repository.save(listing);
     }
 
     public void deleteListing(Integer listingId, Principal connectedUser) {
@@ -111,5 +111,10 @@ public class ListingService {
     public Listing getListing(Integer listingId) {
         return repository.findById(listingId)
                 .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
+    }
+
+    public void deleteListing(Integer listingId) {
+        repository.delete(repository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует")));
     }
 }

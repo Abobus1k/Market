@@ -16,7 +16,7 @@ public class ListingRequest {
     @Size(min = 3, max = 20, message = "Недопустимое название товара")
     private String title;
 
-    @Max(value = 400, message = "Недопустимое описание товара")
+    @Size(max = 400, message = "Недопустимое описание товара")
     private String text;
 
     @NotNull(message = "У товара должна быть категория")

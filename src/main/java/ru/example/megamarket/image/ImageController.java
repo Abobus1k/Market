@@ -21,12 +21,11 @@ public class ImageController {
 
     @PostMapping("/{listingId}")
     @Operation(description = "Добавление изображения к объявлению")
-    public ResponseEntity<Void> uploadImage(@RequestBody @Valid ImageRequest request,
+    public ImageResponse uploadImage(@RequestBody @Valid ImageRequest request,
                                             @PathVariable Integer listingId,
                                             Principal connectedUser) {
         request.setListingId(listingId);
-        service.addImage(request, listingId, connectedUser);
-        return ResponseEntity.ok().build();
+        return mapper.imageToImageResponse(service.addImage(request, listingId, connectedUser));
     }
 
     @GetMapping("/{listingId}")

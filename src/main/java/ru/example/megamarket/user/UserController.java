@@ -26,17 +26,17 @@ public class UserController {
 
     @PatchMapping
     @Operation(description = "Изменение профиля")
-    public ResponseEntity<?> changeProfile(
+    public UserResponse changeProfile(
             @RequestBody @Valid UserRequest request,
             Principal connectedUser
     ) {
         service.update(request, connectedUser);
-        return ResponseEntity.ok().build();
+        return mapper.userToUserResponse(service.update(request, connectedUser));
     }
 
     @DeleteMapping
     @Operation(description = "Удаление аккаунта")
-    public ResponseEntity<?> deleteAccount(
+    public ResponseEntity<Void> deleteAccount(
             Principal connectedUser
     ) {
         service.deleteAccount(connectedUser);

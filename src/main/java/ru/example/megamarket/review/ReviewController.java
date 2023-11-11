@@ -30,10 +30,9 @@ public class ReviewController {
 
     @PostMapping("/{sellerId}")
     @Operation(description = "Создание отзыва о продавце")
-    public ResponseEntity<Void> createReview(@RequestBody @Valid ReviewRequest request, @PathVariable Integer sellerId, Principal connectedUser) {
+    public ReviewResponse createReview(@RequestBody @Valid ReviewRequest request, @PathVariable Integer sellerId, Principal connectedUser) {
         request.setSellerId(sellerId);
-        service.addReview(request, connectedUser);
-        return ResponseEntity.ok().build();
+        return mapper.reviewToReviewResponse(service.addReview(request, connectedUser));
     }
 
     @GetMapping

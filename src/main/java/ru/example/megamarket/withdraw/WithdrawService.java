@@ -19,7 +19,7 @@ public class WithdrawService {
     private final UserRepository userRepository;
     private final WithdrawMapper mapper;
 
-    public void addWithdraw(WithdrawRequest request, Principal connectedUser) {
+    public Withdraw addWithdraw(WithdrawRequest request, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
 
         if (user.getBalance() < request.getSum()) {
@@ -28,7 +28,7 @@ public class WithdrawService {
 
         Withdraw withdraw = mapper.withdrawRequestToWithdraw(request);
         withdraw.setUser(user);
-        withdrawRepository.save(withdraw);
+        return withdrawRepository.save(withdraw);
     }
 
     public void adminDeleteWithdraw(Integer withdrawId, Boolean approved) {

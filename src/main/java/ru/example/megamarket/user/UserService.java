@@ -35,13 +35,13 @@ public class UserService {
         return  (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
     }
 
-    public void update(UserRequest request, Principal connectedUser) {
+    public User update(UserRequest request, Principal connectedUser) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         user.setEmail(request.getEmail());
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        repository.save(user);
+        return repository.save(user);
     }
 
     public void deleteAccount(Principal connectedUser) {

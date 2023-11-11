@@ -15,11 +15,11 @@ import java.security.Principal;
 @Tag(name = "deposit", description = "Работа с депозитами")
 public class DepositController {
     private final DepositService service;
+    private final DepositMapper mapper;
 
     @PostMapping
     @Operation(description = "Создание заявки на депозит")
-    public ResponseEntity<Void> createDeposit(@RequestBody @Valid DepositRequest request, Principal connectedUser) {
-        service.addDeposit(request, connectedUser);
-        return ResponseEntity.ok().build();
+    public DepositResponse createDeposit(@RequestBody @Valid DepositRequest request, Principal connectedUser) {
+        return mapper.depositToDepositResponse(service.addDeposit(request, connectedUser));
     }
 }
