@@ -20,4 +20,5 @@ public class UserResponse {
     private LocalDateTime registrationDate;
     private Long balance;
     private Integer rating;
+    private Role role;
 }
