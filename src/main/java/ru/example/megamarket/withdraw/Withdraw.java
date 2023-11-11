@@ -12,11 +12,11 @@ import ru.example.megamarket.user.User;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "_withdraw")
+@Table(name = "withdraws")
 public class Withdraw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "withdraw_id")
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
