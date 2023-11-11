@@ -6,9 +6,10 @@ import ru.example.megamarket.user.User;
 import java.util.List;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    List<Order> findByBuyer(User buyer);
 
-    List<Order> findBySeller(User seller);
+    List<Order> findBySellerAndBuyerAndStatus(User seller, User buyer, OrderStatus status);
 
-    List<Order> findBySellerAndBuyer(User seller, User buyer);
+    List<Order> findBySellerAndStatus(User seller, OrderStatus status);
+
+    List<Order> findByBuyerAndStatus(User buyer, OrderStatus status);
 }

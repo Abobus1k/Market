@@ -21,6 +21,9 @@
             <column name="sum" type="integer">
                 <constraints nullable="false"/>
             </column>
+            <column name="status" type="varchar(50)">
+                <constraints nullable="false" unique="false"/>
+            </column>
         </createTable>
     </changeSet>
 </databaseChangeLog>

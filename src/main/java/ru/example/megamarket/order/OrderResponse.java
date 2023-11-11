@@ -13,4 +13,5 @@ public class OrderResponse {
     private Integer buyerId;
     private Integer listingId;
     private Integer sum;
+    private OrderStatus status;
 }

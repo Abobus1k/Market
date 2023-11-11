@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException;
+import ru.example.megamarket.exceptions.localexceptions.UnexpectedImageLoadException;
 import ru.example.megamarket.listing.Listing;
 import ru.example.megamarket.listing.ListingRepository;
 import ru.example.megamarket.user.User;
@@ -31,8 +32,7 @@ public class ImageService {
             return repository.save(mapper.imageRequestToImage(request));
         }
         else {
-            throw new HttpServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Попытка добавить другому пользователю изображение отклонена");
+            throw new UnexpectedImageLoadException("Попытка загрузить изображение отклонена");
         }
     }
 

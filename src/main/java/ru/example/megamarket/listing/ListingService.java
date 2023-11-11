@@ -10,6 +10,7 @@ import ru.example.megamarket.exceptions.localexceptions.InsufficientFundsExcepti
 import ru.example.megamarket.exceptions.localexceptions.ListingAlreadyPurchaseException;
 import ru.example.megamarket.order.Order;
 import ru.example.megamarket.order.OrderRepository;
+import ru.example.megamarket.order.OrderStatus;
 import ru.example.megamarket.user.User;
 import ru.example.megamarket.user.UserRepository;
 
@@ -93,6 +94,7 @@ public class ListingService {
         order.setBuyer(user);
         order.setSeller(seller);
         order.setSum(listing.getPrice());
+        order.setStatus(OrderStatus.AWAITING_CONFIRMATION);
         orderRepository.save(order);
 
         userRepository.save(user);

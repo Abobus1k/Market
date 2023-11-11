@@ -27,5 +27,6 @@ public class Image {
     @JoinColumn(name = "listing_id")
     private Listing listing;
 
+    @Column(name = "path")
     private String path;
 }

@@ -34,14 +34,19 @@ public class Listing {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "text")
     private String text;
 
+    @Column(name = "price")
     private Integer price;
 
+    @Column(name = "post_date")
     private LocalDateTime postDate;
 
+    @Column(name = "sold")
     private Boolean sold;
 
     @OneToMany(mappedBy = "listing", cascade = {CascadeType.REMOVE})

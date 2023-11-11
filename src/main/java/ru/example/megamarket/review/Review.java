@@ -19,8 +19,10 @@ public class Review {
     @Column(name = "id")
     private Integer id;
 
+    @Column(name = "text")
     private String text;
 
+    @Column(name = "rating")
     private Integer rating;
 
     @ManyToOne

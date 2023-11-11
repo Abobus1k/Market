@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.example.megamarket.listing.Listing;
+import ru.example.megamarket.user.Role;
 import ru.example.megamarket.user.User;
 
 @Data
@@ -32,5 +33,10 @@ public class Order {
     @JoinColumn(name = "listing_id")
     private Listing listing;
 
+    @Column(name = "sum")
     private Integer sum;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private OrderStatus status;
 }

@@ -6,10 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.example.megamarket.exceptions.localexceptions.DuplicateException;
-import ru.example.megamarket.exceptions.localexceptions.ExtraReviewException;
-import ru.example.megamarket.exceptions.localexceptions.InsufficientFundsException;
-import ru.example.megamarket.exceptions.localexceptions.ListingAlreadyPurchaseException;
+import ru.example.megamarket.exceptions.localexceptions.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +60,22 @@ public class HandleErrorService {
 
     @ExceptionHandler(ExtraReviewException.class)
     public ResponseEntity<Object> handleExtraReviewException(ExtraReviewException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("resultCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ExtraReviewException.class)
+    public ResponseEntity<Object> handleImpossibleDealException(ImpossibleDealException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("resultCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ExtraReviewException.class)
+    public ResponseEntity<Object> handleUnexpectedImageLoadException(UnexpectedImageLoadException ex) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("resultCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
         errorResponse.put("message", ex.getMessage());

@@ -6,6 +6,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.exceptions.localexceptions.ExtraReviewException;
 import ru.example.megamarket.order.OrderRepository;
+import ru.example.megamarket.order.OrderStatus;
 import ru.example.megamarket.user.User;
 import ru.example.megamarket.user.UserRepository;
 
@@ -28,7 +29,7 @@ public class ReviewService {
         review.setBuyer(user);
         review.setSeller(seller);
 
-        int numberOfCrossOrders = orderRepository.findBySellerAndBuyer(seller, user).size();
+        int numberOfCrossOrders = orderRepository.findBySellerAndBuyerAndStatus(seller, user, OrderStatus.APPROVE).size();
         int numberOfCrossReviews = repository.findBySellerAndBuyer(seller, user).size();
 
         if (numberOfCrossReviews == numberOfCrossOrders) {
