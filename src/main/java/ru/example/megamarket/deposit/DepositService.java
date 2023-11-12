@@ -2,6 +2,9 @@ package ru.example.megamarket.deposit;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.user.User;
@@ -38,8 +41,8 @@ public class DepositService {
         depositRepository.delete(deposit);
     }
 
-    public List<Deposit> adminGetAllDeposits() {
-        return depositRepository.findAll();
+    public List<Deposit> adminGetAllDeposits(PageRequest pageRequest) {
+        return depositRepository.findAll(pageRequest).getContent();
     }
 
     public Deposit adminGetDeposit(Integer depositId) {

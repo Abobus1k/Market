@@ -2,6 +2,7 @@ package ru.example.megamarket.review;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.exceptions.localexceptions.ExtraReviewException;
@@ -47,15 +48,15 @@ public class ReviewService {
         return repository.save(review);
     }
 
-    public List<Review> getAllSellerReviews(Integer sellerId) {
+    public List<Review> getAllSellerReviews(Integer sellerId, PageRequest pageRequest) {
         User seller = userRepository.findById(sellerId)
                 .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + sellerId + " не существует"));
-        return repository.findBySeller(seller);
+        return repository.findBySeller(seller, pageRequest).getContent();
     }
 
-    public List<Review> getAllSellerReviews(Principal connectedUser) {
+    public List<Review> getAllSellerReviews(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findBySeller(user);
+        return repository.findBySeller(user, pageRequest).getContent();
     }
 
     public void deleteReview(Integer reviewId) {

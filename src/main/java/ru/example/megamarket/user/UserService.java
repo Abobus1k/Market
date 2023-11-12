@@ -2,6 +2,9 @@ package ru.example.megamarket.user;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,8 +19,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
 
-    public List<User> getAllUsers() {
-        return repository.findAll();
+    public List<User> getAllUsers(PageRequest pageRequest) {
+        return repository.findAll(pageRequest).getContent();
     }
 
     public void removeUser(Integer userId) {

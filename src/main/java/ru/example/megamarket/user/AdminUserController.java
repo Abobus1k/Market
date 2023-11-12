@@ -3,6 +3,8 @@ package ru.example.megamarket.user;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +33,10 @@ public class AdminUserController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(description = "Просмотр всех пользователей")
-    public List<UserResponse> getAllUsers() {
-        return service.getAllUsers()
+    public List<UserResponse> getAllUsers(@RequestParam Integer offset, @RequestParam Integer limit) {
+        return service.getAllUsers(PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::userToUserResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 }

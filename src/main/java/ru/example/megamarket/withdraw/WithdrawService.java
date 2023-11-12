@@ -2,6 +2,9 @@ package ru.example.megamarket.withdraw;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.exceptions.localexceptions.InsufficientFundsException;
@@ -44,8 +47,8 @@ public class WithdrawService {
         withdrawRepository.delete(withdraw);
     }
 
-    public List<Withdraw> adminGetAllWithdraws() {
-        return withdrawRepository.findAll();
+    public List<Withdraw> adminGetAllWithdraws(PageRequest pageRequest) {
+        return withdrawRepository.findAll(pageRequest).getContent();
     }
 
     public Withdraw adminGetWithdraw(Integer withdrawId) {

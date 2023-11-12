@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +22,12 @@ public class ReviewController {
 
     @GetMapping("/{sellerId}")
     @Operation(description = "Просмотр отзывов о продавце")
-    public List<ReviewResponse> getReviews(@PathVariable Integer sellerId) {
-        return service.getAllSellerReviews(sellerId)
+    public List<ReviewResponse> getReviews(
+            @PathVariable Integer sellerId,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllSellerReviews(sellerId, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::reviewToReviewResponse)
                 .collect(Collectors.toList());
@@ -37,8 +42,12 @@ public class ReviewController {
 
     @GetMapping
     @Operation(description = "Просмотр отзывов о текущем пользователе")
-    public List<ReviewResponse> getUserReviews(Principal connectedUser) {
-        return service.getAllSellerReviews(connectedUser)
+    public List<ReviewResponse> getUserReviews(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+                                               ) {
+        return service.getAllSellerReviews(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::reviewToReviewResponse)
                 .collect(Collectors.toList());

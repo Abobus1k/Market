@@ -3,6 +3,7 @@ package ru.example.megamarket.order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -19,8 +20,12 @@ public class OrderController {
 
     @GetMapping("/approved-buys")
     @Operation(description = "Просмотр покупок текущего пользователя")
-    public List<OrderResponse> checkUserApprovedBuys(Principal connectedUser) {
-        return service.getAllUserBuyOrders(connectedUser)
+    public List<OrderResponse> checkUserApprovedBuys(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllUserBuyOrders(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::orderToOrderResponse)
                 .collect(Collectors.toList());
@@ -28,8 +33,12 @@ public class OrderController {
 
     @GetMapping("/approved-sells")
     @Operation(description = "Просмотр продаж текущего пользователя")
-    public List<OrderResponse> checkUserApprovedSells(Principal connectedUser) {
-        return service.getAllUserSellOrders(connectedUser)
+    public List<OrderResponse> checkUserApprovedSells(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllUserSellOrders(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::orderToOrderResponse)
                 .collect(Collectors.toList());
@@ -37,8 +46,12 @@ public class OrderController {
 
     @GetMapping("/active-buys")
     @Operation(description = "Просмотр сделок по покупкам текущего пользователя")
-    public List<OrderResponse> checkUserActiveBuys(Principal connectedUser) {
-        return service.getAllUserBuyDeals(connectedUser)
+    public List<OrderResponse> checkUserActiveBuys(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllUserBuyDeals(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::orderToOrderResponse)
                 .collect(Collectors.toList());
@@ -46,8 +59,12 @@ public class OrderController {
 
     @GetMapping("/active-sells")
     @Operation(description = "Просмотр сделок по продажам текущего пользователя")
-    public List<OrderResponse> checkUserActiveSells(Principal connectedUser) {
-        return service.getAllUserSellDeals(connectedUser)
+    public List<OrderResponse> checkUserActiveSells(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllUserSellDeals(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::orderToOrderResponse)
                 .collect(Collectors.toList());
@@ -55,8 +72,12 @@ public class OrderController {
 
     @GetMapping("/disapprove-buys")
     @Operation(description = "Просмотр сделок по покупкам текущего пользователя")
-    public List<OrderResponse> checkUserDisapproveBuys(Principal connectedUser) {
-        return service.getAllUserBuyRejectDeals(connectedUser)
+    public List<OrderResponse> checkUserDisapproveBuys(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllUserBuyRejectDeals(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::orderToOrderResponse)
                 .collect(Collectors.toList());
@@ -64,8 +85,12 @@ public class OrderController {
 
     @GetMapping("/disapprove-sells")
     @Operation(description = "Просмотр сделок по продажам текущего пользователя")
-    public List<OrderResponse> checkUserDisapproveSells(Principal connectedUser) {
-        return service.getAllUserSellRejectDeals(connectedUser)
+    public List<OrderResponse> checkUserDisapproveSells(
+            Principal connectedUser,
+            @RequestParam Integer offset,
+            @RequestParam Integer limit
+    ) {
+        return service.getAllUserSellRejectDeals(connectedUser, PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::orderToOrderResponse)
                 .collect(Collectors.toList());

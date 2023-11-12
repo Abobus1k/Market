@@ -3,6 +3,8 @@ package ru.example.megamarket.withdraw;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +24,8 @@ public class AdminWithdrawController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(operationId = "Просмотр заявок на вывод средств")
-    public List<WithdrawResponse> checkAllWithdraws() {
-        return service.adminGetAllWithdraws()
+    public List<WithdrawResponse> checkAllWithdraws(@RequestParam Integer offset, @RequestParam Integer limit) {
+        return service.adminGetAllWithdraws(PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::withdrawToWithdrawResponse)
                 .collect(Collectors.toList());

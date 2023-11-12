@@ -3,6 +3,9 @@ package ru.example.megamarket.deposit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +25,11 @@ public class AdminDepositController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(operationId = "Просмотр заявок на депозит")
-    public List<DepositResponse> checkAllDeposits() {
-        return service.adminGetAllDeposits()
+    public List<DepositResponse> checkAllDeposits(@RequestParam Integer offset, @RequestParam Integer limit) {
+        return service.adminGetAllDeposits(PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::depositToDepositResponse)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @PreAuthorize("hasAuthority('admin:delete')")
