@@ -34,8 +34,8 @@ public class ListingController {
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) Boolean asc,
-            @RequestParam Integer offset,
-            @RequestParam Integer limit
+            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "10") Integer limit
     ) {
         if (!isValidRequest(sortBy, asc)) {
             throw new ImpossibleSearchException("Такая сортировка невозможна");
@@ -51,8 +51,8 @@ public class ListingController {
     @Operation(description = "Просмотр своих актуальных объявлений")
     public List<ListingResponse> getListings(
             Principal connectedUser,
-            @RequestParam Integer offset,
-            @RequestParam Integer limit
+            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserListings(connectedUser, PageRequest.of(offset, limit))
                 .stream()
@@ -90,8 +90,8 @@ public class ListingController {
     @Operation(description = "Получение активных объявлений пользователя")
     public List<ListingResponse> getAllUserActiveListings(
             @PathVariable Integer userId,
-            @RequestParam Integer offset,
-            @RequestParam Integer limit
+            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserListings(userId, PageRequest.of(offset, limit))
                 .stream()

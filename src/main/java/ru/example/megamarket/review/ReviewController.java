@@ -24,8 +24,8 @@ public class ReviewController {
     @Operation(description = "Просмотр отзывов о продавце")
     public List<ReviewResponse> getReviews(
             @PathVariable Integer sellerId,
-            @RequestParam Integer offset,
-            @RequestParam Integer limit
+            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllSellerReviews(sellerId, PageRequest.of(offset, limit))
                 .stream()
@@ -44,8 +44,8 @@ public class ReviewController {
     @Operation(description = "Просмотр отзывов о текущем пользователе")
     public List<ReviewResponse> getUserReviews(
             Principal connectedUser,
-            @RequestParam Integer offset,
-            @RequestParam Integer limit
+            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "10") Integer limit
                                                ) {
         return service.getAllSellerReviews(connectedUser, PageRequest.of(offset, limit))
                 .stream()

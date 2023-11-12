@@ -24,7 +24,7 @@ public class AdminWithdrawController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(operationId = "Просмотр заявок на вывод средств")
-    public List<WithdrawResponse> checkAllWithdraws(@RequestParam Integer offset, @RequestParam Integer limit) {
+    public List<WithdrawResponse> checkAllWithdraws(@RequestParam(defaultValue = "10") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
         return service.adminGetAllWithdraws(PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::withdrawToWithdrawResponse)
