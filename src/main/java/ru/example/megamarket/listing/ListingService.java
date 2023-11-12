@@ -2,6 +2,7 @@ package ru.example.megamarket.listing;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.category.Category;
@@ -28,37 +29,41 @@ public class ListingService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final OrderRepository orderRepository;
+    private static final String POST_DATE = "postDate";
 
-    public List<Listing> getSearchListings(Integer categoryId, Boolean priceOrder, Boolean postDateOrder) {
+    public List<Listing> getSearchListings(Principal connectedUser, Integer categoryId, String sortBy, Boolean asc, PageRequest pageRequest) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
         List<Listing> listings = categoryId == null ?
-                repository.findBySold(false) :
+                repository.findBySold(false, pageRequest).getContent() :
                 repository.findByCategoryAndSold(categoryRepository.findById(categoryId)
                         .orElseThrow(() -> new EntityNotFoundException("Категории с id: " + categoryId + " не существует")),
-                        false);
+                        false, pageRequest).getContent();
 
-        if (postDateOrder != null) {
+
+
+        if (sortBy == null) {
+            return listings;
+        }
+
+        if (sortBy.equals(POST_DATE)) {
             return listings.stream()
-                    .sorted(Comparator.comparing(Listing::getPostDate))
+                    .sorted(Comparator.comparing(Listing::getPostDate, asc ? Comparator.naturalOrder() : Comparator.reverseOrder()))
                     .collect(Collectors.toList());
         }
 
-        if (priceOrder != null) {
-            return listings.stream()
-                    .sorted(Comparator.comparing(Listing::getPrice))
-                    .collect(Collectors.toList());
-        }
-
-        return listings;
+        return listings.stream()
+                .sorted(Comparator.comparing(Listing::getPrice, asc ? Comparator.naturalOrder() : Comparator.reverseOrder()))
+                .collect(Collectors.toList());
     }
 
-    public List<Listing> getAllUserListings(Principal connectedUser) {
+    public List<Listing> getAllUserListings(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findBySoldAndUser(false, user);
+        return repository.findBySoldAndUser(false, user, pageRequest).getContent();
     }
 
-    public List<Listing> getAllUserListings(Integer userId) {
+    public List<Listing> getAllUserListings(Integer userId, PageRequest pageRequest) {
         return repository.findBySoldAndUser(false, userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует")));
+                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует")), pageRequest).getContent();
     }
 
     public Listing addListing(ListingRequest request, Principal connectedUser) {

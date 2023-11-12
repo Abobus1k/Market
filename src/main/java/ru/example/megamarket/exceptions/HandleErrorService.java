@@ -81,4 +81,12 @@ public class HandleErrorService {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(ImpossibleSearchException.class)
+    public ResponseEntity<Object> handleImpossibleSearchException(ImpossibleSearchException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("resultCode", HttpStatus.FORBIDDEN.value());
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
 }
