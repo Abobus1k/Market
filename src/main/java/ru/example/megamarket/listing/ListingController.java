@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class ListingController {
 
     @GetMapping("/search")
     @Operation(description = "Поиск объявлений")
-    public List<ListingResponse> getSearchListings(
+    public PagedListingResponse getSearchListings(
             Principal connectedUser,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String sortBy,
@@ -41,23 +42,25 @@ public class ListingController {
             throw new ImpossibleSearchException("Такая сортировка невозможна");
         }
 
-        return service.getSearchListings(connectedUser, categoryId, sortBy, asc, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::listingToListingResponse)
-                .collect(Collectors.toList());
+        Page<Listing> page = service.getSearchListings(connectedUser, categoryId, sortBy, asc, PageRequest.of(offset, limit));
+        return PagedListingResponse.builder()
+                .totalPages(page.getTotalPages())
+                .listingResponseList(page.getContent().stream().map(mapper::listingToListingResponse).toList())
+                .build();
     }
 
     @GetMapping("/myListings")
     @Operation(description = "Просмотр своих актуальных объявлений")
-    public List<ListingResponse> getListings(
+    public PagedListingResponse getListings(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserListings(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::listingToListingResponse)
-                .collect(Collectors.toList());
+        Page<Listing> page = service.getAllUserListings(connectedUser, PageRequest.of(offset, limit));
+        return PagedListingResponse.builder()
+                .totalPages(page.getTotalPages())
+                .listingResponseList(page.getContent().stream().map(mapper::listingToListingResponse).toList())
+                .build();
     }
 
     @PostMapping
@@ -88,15 +91,16 @@ public class ListingController {
 
     @GetMapping("/userListings/{userId}")
     @Operation(description = "Получение активных объявлений пользователя")
-    public List<ListingResponse> getAllUserActiveListings(
+    public PagedListingResponse getAllUserActiveListings(
             @PathVariable Integer userId,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserListings(userId, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::listingToListingResponse)
-                .collect(Collectors.toList());
+        Page<Listing> page = service.getAllUserListings(userId, PageRequest.of(offset, limit));
+        return PagedListingResponse.builder()
+                .totalPages(page.getTotalPages())
+                .listingResponseList(page.getContent().stream().map(mapper::listingToListingResponse).toList())
+                .build();
     }
 
     private boolean isValidRequest(String sortBy, Boolean asc) {

@@ -19,8 +19,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
 
-    public List<User> getAllUsers(PageRequest pageRequest) {
-        return repository.findAll(pageRequest).getContent();
+    public Page<User> getAllUsers(PageRequest pageRequest) {
+        return repository.findAll(pageRequest);
     }
 
     public void removeUser(Integer userId) {

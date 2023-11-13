@@ -47,8 +47,8 @@ public class WithdrawService {
         withdrawRepository.delete(withdraw);
     }
 
-    public List<Withdraw> adminGetAllWithdraws(PageRequest pageRequest) {
-        return withdrawRepository.findAll(pageRequest).getContent();
+    public Page<Withdraw> adminGetAllWithdraws(PageRequest pageRequest) {
+        return withdrawRepository.findAll(pageRequest);
     }
 
     public Withdraw adminGetWithdraw(Integer withdrawId) {

@@ -3,6 +3,7 @@ package ru.example.megamarket.order;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,80 +21,86 @@ public class OrderController {
 
     @GetMapping("/approved-buys")
     @Operation(description = "Просмотр покупок текущего пользователя")
-    public List<OrderResponse> checkUserApprovedBuys(
+    public PagedOrderResponse checkUserApprovedBuys(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserBuyOrders(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::orderToOrderResponse)
-                .collect(Collectors.toList());
+        Page<Order> page = service.getAllUserBuyOrders(connectedUser, PageRequest.of(offset, limit));
+        return PagedOrderResponse.builder()
+                .totalPages(page.getTotalPages())
+                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .build();
     }
 
     @GetMapping("/approved-sells")
     @Operation(description = "Просмотр продаж текущего пользователя")
-    public List<OrderResponse> checkUserApprovedSells(
+    public PagedOrderResponse checkUserApprovedSells(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserSellOrders(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::orderToOrderResponse)
-                .collect(Collectors.toList());
+        Page<Order> page = service.getAllUserSellOrders(connectedUser, PageRequest.of(offset, limit));
+        return PagedOrderResponse.builder()
+                .totalPages(page.getTotalPages())
+                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .build();
     }
 
     @GetMapping("/active-buys")
     @Operation(description = "Просмотр сделок по покупкам текущего пользователя")
-    public List<OrderResponse> checkUserActiveBuys(
+    public PagedOrderResponse checkUserActiveBuys(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserBuyDeals(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::orderToOrderResponse)
-                .collect(Collectors.toList());
+        Page<Order> page = service.getAllUserBuyDeals(connectedUser, PageRequest.of(offset, limit));
+        return PagedOrderResponse.builder()
+                .totalPages(page.getTotalPages())
+                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .build();
     }
 
     @GetMapping("/active-sells")
     @Operation(description = "Просмотр сделок по продажам текущего пользователя")
-    public List<OrderResponse> checkUserActiveSells(
+    public PagedOrderResponse checkUserActiveSells(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserSellDeals(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::orderToOrderResponse)
-                .collect(Collectors.toList());
+        Page<Order> page = service.getAllUserSellDeals(connectedUser, PageRequest.of(offset, limit));
+        return PagedOrderResponse.builder()
+                .totalPages(page.getTotalPages())
+                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .build();
     }
 
     @GetMapping("/disapprove-buys")
     @Operation(description = "Просмотр сделок по покупкам текущего пользователя")
-    public List<OrderResponse> checkUserDisapproveBuys(
+    public PagedOrderResponse checkUserDisapproveBuys(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserBuyRejectDeals(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::orderToOrderResponse)
-                .collect(Collectors.toList());
+        Page<Order> page = service.getAllUserBuyRejectDeals(connectedUser, PageRequest.of(offset, limit));
+        return PagedOrderResponse.builder()
+                .totalPages(page.getTotalPages())
+                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .build();
     }
 
     @GetMapping("/disapprove-sells")
     @Operation(description = "Просмотр сделок по продажам текущего пользователя")
-    public List<OrderResponse> checkUserDisapproveSells(
+    public PagedOrderResponse checkUserDisapproveSells(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllUserSellRejectDeals(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::orderToOrderResponse)
-                .collect(Collectors.toList());
+        Page<Order> page = service.getAllUserSellRejectDeals(connectedUser, PageRequest.of(offset, limit));
+        return PagedOrderResponse.builder()
+                .totalPages(page.getTotalPages())
+                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .build();
     }
 
     @PostMapping("/approve/{orderId}")

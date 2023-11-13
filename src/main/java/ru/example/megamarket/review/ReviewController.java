@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +23,16 @@ public class ReviewController {
 
     @GetMapping("/{sellerId}")
     @Operation(description = "Просмотр отзывов о продавце")
-    public List<ReviewResponse> getReviews(
+    public PagedReviewResponse getReviews(
             @PathVariable Integer sellerId,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
-        return service.getAllSellerReviews(sellerId, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::reviewToReviewResponse)
-                .collect(Collectors.toList());
+        Page<Review> page = service.getAllSellerReviews(sellerId, PageRequest.of(offset, limit));
+        return PagedReviewResponse.builder()
+                .totalPages(page.getTotalPages())
+                .reviewResponseList(page.getContent().stream().map(mapper::reviewToReviewResponse).toList())
+                .build();
     }
 
     @PostMapping("/{sellerId}")
@@ -42,14 +44,15 @@ public class ReviewController {
 
     @GetMapping
     @Operation(description = "Просмотр отзывов о текущем пользователе")
-    public List<ReviewResponse> getUserReviews(
+    public PagedReviewResponse getUserReviews(
             Principal connectedUser,
             @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
                                                ) {
-        return service.getAllSellerReviews(connectedUser, PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::reviewToReviewResponse)
-                .collect(Collectors.toList());
+        Page<Review> page = service.getAllSellerReviews(connectedUser, PageRequest.of(offset, limit));
+        return PagedReviewResponse.builder()
+                .totalPages(page.getTotalPages())
+                .reviewResponseList(page.getContent().stream().map(mapper::reviewToReviewResponse).toList())
+                .build();
     }
 }

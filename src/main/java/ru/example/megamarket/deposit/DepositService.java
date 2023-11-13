@@ -41,8 +41,8 @@ public class DepositService {
         depositRepository.delete(deposit);
     }
 
-    public List<Deposit> adminGetAllDeposits(PageRequest pageRequest) {
-        return depositRepository.findAll(pageRequest).getContent();
+    public Page<Deposit> adminGetAllDeposits(PageRequest pageRequest) {
+        return depositRepository.findAll(pageRequest);
     }
 
     public Deposit adminGetDeposit(Integer depositId) {

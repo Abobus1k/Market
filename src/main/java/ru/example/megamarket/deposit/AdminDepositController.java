@@ -25,11 +25,12 @@ public class AdminDepositController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(operationId = "Просмотр заявок на депозит")
-    public List<DepositResponse> checkAllDeposits(@RequestParam(defaultValue = "0") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
-        return service.adminGetAllDeposits(PageRequest.of(offset, limit))
-                .stream()
-                .map(mapper::depositToDepositResponse)
-                .toList();
+    public PagedDepositResponse checkAllDeposits(@RequestParam(defaultValue = "0") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
+        Page<Deposit> page = service.adminGetAllDeposits(PageRequest.of(offset, limit));
+        return PagedDepositResponse.builder()
+                .totalPages(page.getTotalPages())
+                .depositResponseList(page.getContent().stream().map(mapper::depositToDepositResponse).toList())
+                .build();
     }
 
     @PreAuthorize("hasAuthority('admin:delete')")

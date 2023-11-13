@@ -2,6 +2,7 @@ package ru.example.megamarket.order;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,46 +25,34 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ListingRepository listingRepository;
 
-    public List<Order> getAllUserBuyOrders(Principal connectedUser, PageRequest pageRequest) {
+    public Page<Order> getAllUserBuyOrders(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findByBuyerAndStatus(user, OrderStatus.APPROVE, pageRequest).getContent().stream()
-                .filter(x -> x.getListing().getSold())
-                .collect(Collectors.toList());
+        return repository.findByBuyerAndStatus(user, OrderStatus.APPROVE, pageRequest);
     }
 
-    public List<Order> getAllUserSellOrders(Principal connectedUser, PageRequest pageRequest) {
+    public Page<Order> getAllUserSellOrders(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findBySellerAndStatus(user, OrderStatus.APPROVE, pageRequest).getContent().stream()
-                .filter(x -> x.getListing().getSold())
-                .collect(Collectors.toList());
+        return repository.findBySellerAndStatus(user, OrderStatus.APPROVE, pageRequest);
     }
 
-    public List<Order> getAllUserBuyDeals(Principal connectedUser, PageRequest pageRequest) {
+    public Page<Order> getAllUserBuyDeals(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findByBuyerAndStatus(user, OrderStatus.AWAITING_CONFIRMATION, pageRequest).getContent().stream()
-                .filter(x -> x.getListing().getSold())
-                .collect(Collectors.toList());
+        return repository.findByBuyerAndStatus(user, OrderStatus.AWAITING_CONFIRMATION, pageRequest);
     }
 
-    public List<Order> getAllUserSellDeals(Principal connectedUser, PageRequest pageRequest) {
+    public Page<Order> getAllUserSellDeals(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findBySellerAndStatus(user, OrderStatus.AWAITING_CONFIRMATION, pageRequest).getContent().stream()
-                .filter(x -> x.getListing().getSold())
-                .collect(Collectors.toList());
+        return repository.findBySellerAndStatus(user, OrderStatus.AWAITING_CONFIRMATION, pageRequest);
     }
 
-    public List<Order> getAllUserBuyRejectDeals(Principal connectedUser, PageRequest pageRequest) {
+    public Page<Order> getAllUserBuyRejectDeals(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findByBuyerAndStatus(user, OrderStatus.DISAPPROVE, pageRequest).getContent().stream()
-                .filter(x -> !x.getListing().getSold())
-                .collect(Collectors.toList());
+        return repository.findByBuyerAndStatus(user, OrderStatus.DISAPPROVE, pageRequest);
     }
 
-    public List<Order> getAllUserSellRejectDeals(Principal connectedUser, PageRequest pageRequest) {
+    public Page<Order> getAllUserSellRejectDeals(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findBySellerAndStatus(user, OrderStatus.DISAPPROVE, pageRequest).getContent().stream()
-                .filter(x -> !x.getListing().getSold())
-                .toList();
+        return repository.findBySellerAndStatus(user, OrderStatus.DISAPPROVE, pageRequest);
     }
 
     public Order approveDeal(Integer dealId, Principal connectedUser) {
