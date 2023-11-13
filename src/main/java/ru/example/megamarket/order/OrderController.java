@@ -22,7 +22,7 @@ public class OrderController {
     @Operation(description = "Просмотр покупок текущего пользователя")
     public List<OrderResponse> checkUserApprovedBuys(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserBuyOrders(connectedUser, PageRequest.of(offset, limit))
@@ -35,7 +35,7 @@ public class OrderController {
     @Operation(description = "Просмотр продаж текущего пользователя")
     public List<OrderResponse> checkUserApprovedSells(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserSellOrders(connectedUser, PageRequest.of(offset, limit))
@@ -48,7 +48,7 @@ public class OrderController {
     @Operation(description = "Просмотр сделок по покупкам текущего пользователя")
     public List<OrderResponse> checkUserActiveBuys(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserBuyDeals(connectedUser, PageRequest.of(offset, limit))
@@ -61,7 +61,7 @@ public class OrderController {
     @Operation(description = "Просмотр сделок по продажам текущего пользователя")
     public List<OrderResponse> checkUserActiveSells(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserSellDeals(connectedUser, PageRequest.of(offset, limit))
@@ -74,7 +74,7 @@ public class OrderController {
     @Operation(description = "Просмотр сделок по покупкам текущего пользователя")
     public List<OrderResponse> checkUserDisapproveBuys(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserBuyRejectDeals(connectedUser, PageRequest.of(offset, limit))
@@ -87,7 +87,7 @@ public class OrderController {
     @Operation(description = "Просмотр сделок по продажам текущего пользователя")
     public List<OrderResponse> checkUserDisapproveSells(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserSellRejectDeals(connectedUser, PageRequest.of(offset, limit))

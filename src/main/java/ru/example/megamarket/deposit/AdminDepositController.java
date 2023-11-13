@@ -25,7 +25,7 @@ public class AdminDepositController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(operationId = "Просмотр заявок на депозит")
-    public List<DepositResponse> checkAllDeposits(@RequestParam(defaultValue = "10") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
+    public List<DepositResponse> checkAllDeposits(@RequestParam(defaultValue = "0") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
         return service.adminGetAllDeposits(PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::depositToDepositResponse)

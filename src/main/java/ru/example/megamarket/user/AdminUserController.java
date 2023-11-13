@@ -33,7 +33,7 @@ public class AdminUserController {
     @PreAuthorize("hasAuthority('admin:read')")
     @GetMapping
     @Operation(description = "Просмотр всех пользователей")
-    public List<UserResponse> getAllUsers(@RequestParam(defaultValue = "10") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
+    public List<UserResponse> getAllUsers(@RequestParam(defaultValue = "0") Integer offset, @RequestParam(defaultValue = "10") Integer limit) {
         return service.getAllUsers(PageRequest.of(offset, limit))
                 .stream()
                 .map(mapper::userToUserResponse)

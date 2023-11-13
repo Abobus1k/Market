@@ -34,7 +34,7 @@ public class ListingController {
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) Boolean asc,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         if (!isValidRequest(sortBy, asc)) {
@@ -51,7 +51,7 @@ public class ListingController {
     @Operation(description = "Просмотр своих актуальных объявлений")
     public List<ListingResponse> getListings(
             Principal connectedUser,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserListings(connectedUser, PageRequest.of(offset, limit))
@@ -90,7 +90,7 @@ public class ListingController {
     @Operation(description = "Получение активных объявлений пользователя")
     public List<ListingResponse> getAllUserActiveListings(
             @PathVariable Integer userId,
-            @RequestParam(defaultValue = "10") Integer offset,
+            @RequestParam(defaultValue = "0") Integer offset,
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         return service.getAllUserListings(userId, PageRequest.of(offset, limit))
