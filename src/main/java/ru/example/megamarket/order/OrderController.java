@@ -27,9 +27,23 @@ public class OrderController {
             @RequestParam(defaultValue = "10") Integer limit
     ) {
         Page<Order> page = service.getAllUserBuyOrders(connectedUser, PageRequest.of(offset, limit));
+
         return PagedOrderResponse.builder()
                 .totalPages(page.getTotalPages())
-                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .orderResponseList(page.getContent().stream().map(x -> OrderResponse.builder()
+                        .id(x.getId())
+                        .sellerId(x.getSeller().getId())
+                        .buyerId(x.getBuyer().getId())
+                        .sum(x.getSum())
+                        .status(x.getStatus())
+                        .listingId(x.getListing().getId())
+                        .listingTitle(x.getListing().getTitle())
+                        .listingText(x.getListing().getText())
+                        .listingCategoryId(x.getListing().getCategory().getId())
+                        .listingPostDate(x.getListing().getPostDate())
+                        .listingSold(x.getListing().getSold())
+                        .listingStatus(x.getListing().getListingStatus())
+                        .build()).toList())
                 .build();
     }
 
@@ -43,7 +57,20 @@ public class OrderController {
         Page<Order> page = service.getAllUserSellOrders(connectedUser, PageRequest.of(offset, limit));
         return PagedOrderResponse.builder()
                 .totalPages(page.getTotalPages())
-                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .orderResponseList(page.getContent().stream().map(x -> OrderResponse.builder()
+                        .id(x.getId())
+                        .sellerId(x.getSeller().getId())
+                        .buyerId(x.getBuyer().getId())
+                        .sum(x.getSum())
+                        .status(x.getStatus())
+                        .listingId(x.getListing().getId())
+                        .listingTitle(x.getListing().getTitle())
+                        .listingText(x.getListing().getText())
+                        .listingCategoryId(x.getListing().getCategory().getId())
+                        .listingPostDate(x.getListing().getPostDate())
+                        .listingSold(x.getListing().getSold())
+                        .listingStatus(x.getListing().getListingStatus())
+                        .build()).toList())
                 .build();
     }
 
@@ -57,7 +84,20 @@ public class OrderController {
         Page<Order> page = service.getAllUserBuyDeals(connectedUser, PageRequest.of(offset, limit));
         return PagedOrderResponse.builder()
                 .totalPages(page.getTotalPages())
-                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .orderResponseList(page.getContent().stream().map(x -> OrderResponse.builder()
+                        .id(x.getId())
+                        .sellerId(x.getSeller().getId())
+                        .buyerId(x.getBuyer().getId())
+                        .sum(x.getSum())
+                        .status(x.getStatus())
+                        .listingId(x.getListing().getId())
+                        .listingTitle(x.getListing().getTitle())
+                        .listingText(x.getListing().getText())
+                        .listingCategoryId(x.getListing().getCategory().getId())
+                        .listingPostDate(x.getListing().getPostDate())
+                        .listingSold(x.getListing().getSold())
+                        .listingStatus(x.getListing().getListingStatus())
+                        .build()).toList())
                 .build();
     }
 
@@ -71,7 +111,20 @@ public class OrderController {
         Page<Order> page = service.getAllUserSellDeals(connectedUser, PageRequest.of(offset, limit));
         return PagedOrderResponse.builder()
                 .totalPages(page.getTotalPages())
-                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .orderResponseList(page.getContent().stream().map(x -> OrderResponse.builder()
+                        .id(x.getId())
+                        .sellerId(x.getSeller().getId())
+                        .buyerId(x.getBuyer().getId())
+                        .sum(x.getSum())
+                        .status(x.getStatus())
+                        .listingId(x.getListing().getId())
+                        .listingTitle(x.getListing().getTitle())
+                        .listingText(x.getListing().getText())
+                        .listingCategoryId(x.getListing().getCategory().getId())
+                        .listingPostDate(x.getListing().getPostDate())
+                        .listingSold(x.getListing().getSold())
+                        .listingStatus(x.getListing().getListingStatus())
+                        .build()).toList())
                 .build();
     }
 
@@ -85,7 +138,20 @@ public class OrderController {
         Page<Order> page = service.getAllUserBuyRejectDeals(connectedUser, PageRequest.of(offset, limit));
         return PagedOrderResponse.builder()
                 .totalPages(page.getTotalPages())
-                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .orderResponseList(page.getContent().stream().map(x -> OrderResponse.builder()
+                        .id(x.getId())
+                        .sellerId(x.getSeller().getId())
+                        .buyerId(x.getBuyer().getId())
+                        .sum(x.getSum())
+                        .status(x.getStatus())
+                        .listingId(x.getListing().getId())
+                        .listingTitle(x.getListing().getTitle())
+                        .listingText(x.getListing().getText())
+                        .listingCategoryId(x.getListing().getCategory().getId())
+                        .listingPostDate(x.getListing().getPostDate())
+                        .listingSold(x.getListing().getSold())
+                        .listingStatus(x.getListing().getListingStatus())
+                        .build()).toList())
                 .build();
     }
 
@@ -99,7 +165,20 @@ public class OrderController {
         Page<Order> page = service.getAllUserSellRejectDeals(connectedUser, PageRequest.of(offset, limit));
         return PagedOrderResponse.builder()
                 .totalPages(page.getTotalPages())
-                .orderResponseList(page.getContent().stream().map(mapper::orderToOrderResponse).toList())
+                .orderResponseList(page.getContent().stream().map(x -> OrderResponse.builder()
+                        .id(x.getId())
+                        .sellerId(x.getSeller().getId())
+                        .buyerId(x.getBuyer().getId())
+                        .sum(x.getSum())
+                        .status(x.getStatus())
+                        .listingId(x.getListing().getId())
+                        .listingTitle(x.getListing().getTitle())
+                        .listingText(x.getListing().getText())
+                        .listingCategoryId(x.getListing().getCategory().getId())
+                        .listingPostDate(x.getListing().getPostDate())
+                        .listingSold(x.getListing().getSold())
+                        .listingStatus(x.getListing().getListingStatus())
+                        .build()).toList())
                 .build();
     }
 
