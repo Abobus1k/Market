@@ -17,7 +17,7 @@ public class ReviewRequest {
     private String text;
 
     @NotNull
-    @Min(value = 0, message = "Рейтинг может принимать значения от 0 до 5")
+    @Min(value = 1, message = "Рейтинг может принимать значения от 1 до 5")
     @Max(value = 5, message = "Рейтинг может принимать значения от 0 до 5")
     private Integer rating;
 }
