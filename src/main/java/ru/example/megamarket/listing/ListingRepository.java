@@ -13,9 +13,11 @@ import java.util.List;
 
 @Repository
 public interface ListingRepository extends JpaRepository<Listing, Integer> {
-    Page<Listing> findBySoldAndUser(Boolean sold, User user, PageRequest pageRequest);
+    Page<Listing> findBySoldAndUserAndListingStatus(Boolean sold, User user, PageRequest pageRequest, ListingStatus status);
 
-    Page<Listing> findBySoldAndUserNot(Boolean sold, PageRequest pageRequest, Sort sort, User user);
+    Page<Listing> findBySoldAndUserNotAndListingStatus(Boolean sold, PageRequest pageRequest, Sort sort, User user, ListingStatus status);
 
-    Page<Listing> findByCategoryAndSoldAndUserNot(Category category, Boolean sold, PageRequest pageRequest,Sort sort, User user);
+    Page<Listing> findByCategoryAndSoldAndUserNotAndListingStatus(Category category, Boolean sold, PageRequest pageRequest,Sort sort, User user, ListingStatus status);
+
+    List<Listing> findAllByUser(User user);
 }

@@ -89,4 +89,12 @@ public class HandleErrorService {
         errorResponse.put("message", ex.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
     }
+
+    @ExceptionHandler(UserBanException.class)
+    public ResponseEntity<Object> handleUserBanException(UserBanException ex) {
+        Map<String, Object> errorResponse = new HashMap<>();
+        errorResponse.put("resultCode", HttpStatus.FORBIDDEN.value());
+        errorResponse.put("message", ex.getMessage());
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
 }

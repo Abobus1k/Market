@@ -47,6 +47,10 @@ public class User implements UserDetails {
     @Column(name = "role")
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private UserStatus userStatus;
+
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
     private List<Token> tokens;
 

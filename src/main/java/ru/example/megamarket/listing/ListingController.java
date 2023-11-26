@@ -76,11 +76,10 @@ public class ListingController {
         return mapper.listingToListingResponse(service.buyListingWithId(listingId, connectedUser));
     }
 
-    @DeleteMapping("/{listingId}")
+    @PostMapping("/delete/{listingId}")
     @Operation(description = "Удаление объявления")
-    public ResponseEntity<Void> removeListing(@PathVariable Integer listingId, Principal connectedUser) {
-        service.deleteListing(listingId, connectedUser);
-        return ResponseEntity.noContent().build();
+    public ListingResponse removeListing(@PathVariable Integer listingId, Principal connectedUser) {
+        return mapper.listingToListingResponse(service.banListing(listingId, connectedUser));
     }
 
     @GetMapping("/{listingId}")

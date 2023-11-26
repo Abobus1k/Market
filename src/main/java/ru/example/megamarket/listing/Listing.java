@@ -49,6 +49,10 @@ public class Listing {
     @Column(name = "sold")
     private Boolean sold;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "listing_status")
+    private ListingStatus listingStatus;
+
     @OneToMany(mappedBy = "listing", cascade = {CascadeType.REMOVE})
     private List<Image> images;
 

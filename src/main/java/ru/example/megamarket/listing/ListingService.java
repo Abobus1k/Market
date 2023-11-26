@@ -42,20 +42,20 @@ public class ListingService {
         }
 
         return categoryId == null ?
-                repository.findBySoldAndUserNot(false, pageRequest, sort, user) :
-                repository.findByCategoryAndSoldAndUserNot(categoryRepository.findById(categoryId)
+                repository.findBySoldAndUserNotAndListingStatus(false, pageRequest, sort, user, ListingStatus.ACTIVE) :
+                repository.findByCategoryAndSoldAndUserNotAndListingStatus(categoryRepository.findById(categoryId)
                         .orElseThrow(() -> new EntityNotFoundException("Категории с id: " + categoryId + " не существует")),
-                        false, pageRequest,sort, user);
+                        false, pageRequest,sort, user, ListingStatus.ACTIVE);
     }
 
     public Page<Listing> getAllUserListings(Principal connectedUser, PageRequest pageRequest) {
         var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
-        return repository.findBySoldAndUser(false, user, pageRequest);
+        return repository.findBySoldAndUserAndListingStatus(false, user, pageRequest, ListingStatus.ACTIVE);
     }
 
     public Page<Listing> getAllUserListings(Integer userId, PageRequest pageRequest) {
-        return repository.findBySoldAndUser(false, userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует")), pageRequest);
+        return repository.findBySoldAndUserAndListingStatus(false, userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Пользователя с id: " + userId + " не существует")), pageRequest, ListingStatus.ACTIVE);
     }
 
     public Listing addListing(ListingRequest request, Principal connectedUser) {
@@ -63,6 +63,7 @@ public class ListingService {
         Listing listing = mapper.ListingRequestToListing(request);
         listing.setPostDate(LocalDateTime.now());
         listing.setSold(false);
+        listing.setListingStatus(ListingStatus.ACTIVE);
         listing.setUser(user);
         return repository.save(listing);
     }
@@ -115,5 +116,26 @@ public class ListingService {
     public void deleteListing(Integer listingId) {
         repository.delete(repository.findById(listingId)
                 .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует")));
+    }
+
+    public Listing banListing(Integer listingId) {
+        Listing listing = repository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
+        listing.setListingStatus(ListingStatus.TRASH);
+        return repository.save(listing);
+    }
+
+    public Listing banListing(Integer listingId, Principal connectedUser) {
+        var user = (User) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal();
+        Listing listing = repository.findById(listingId)
+                .orElseThrow(() -> new EntityNotFoundException("Объявления с id: " + listingId + " не существует"));
+        //listing.setListingStatus(ListingStatus.TRASH);
+        //return repository.save(listing);
+        if (listing.getUser().getId().equals(user.getId())) {
+            listing.setListingStatus(ListingStatus.TRASH);
+            return repository.save(listing);
+        }
+
+        throw new RuntimeException();
     }
 }

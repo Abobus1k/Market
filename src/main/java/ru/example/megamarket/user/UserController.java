@@ -34,13 +34,12 @@ public class UserController {
         return mapper.userToUserResponse(service.update(request, connectedUser));
     }
 
-    @DeleteMapping
+    @PostMapping
     @Operation(description = "Удаление аккаунта")
-    public ResponseEntity<Void> deleteAccount(
+    public UserResponse deleteAccount(
             Principal connectedUser
     ) {
-        service.deleteAccount(connectedUser);
-        return ResponseEntity.noContent().build();
+        return mapper.userToUserResponse(service.banAccount(connectedUser));
     }
 
     @GetMapping("/profile")

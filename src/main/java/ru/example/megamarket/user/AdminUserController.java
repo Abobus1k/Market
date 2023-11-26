@@ -24,11 +24,11 @@ public class AdminUserController {
     private final UserMapper mapper;
 
     @PreAuthorize("hasAuthority('admin:delete')")
-    @DeleteMapping("{userId}")
+    @PostMapping("{userId}")
     @Operation(description = "Удаления пользователя")
-    public ResponseEntity<Void> deleteUser(@PathVariable Integer userId) {
-        service.removeUser(userId);
-        return ResponseEntity.noContent().build();
+    public UserResponse deleteUser(@PathVariable Integer userId) {
+
+        return mapper.userToUserResponse(service.banUser(userId));
     }
 
     @PreAuthorize("hasAuthority('admin:read')")

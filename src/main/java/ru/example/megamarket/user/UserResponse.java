@@ -21,4 +21,5 @@ public class UserResponse {
     private Long balance;
     private Integer rating;
     private Role role;
+    private UserStatus userStatus;
 }

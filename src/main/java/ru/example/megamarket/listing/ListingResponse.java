@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.example.megamarket.category.CategoryResponse;
+import ru.example.megamarket.user.UserStatus;
 
 import java.time.LocalDateTime;
 
@@ -21,4 +22,5 @@ public class ListingResponse {
     private LocalDateTime postDate;
     private Boolean sold;
     private Integer userId;
+    private ListingStatus listingStatus;
 }

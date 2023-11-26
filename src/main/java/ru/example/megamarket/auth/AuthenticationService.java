@@ -10,12 +10,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.example.megamarket.config.JwtService;
+import ru.example.megamarket.exceptions.localexceptions.UserBanException;
 import ru.example.megamarket.token.Token;
 import ru.example.megamarket.token.TokenRepository;
 import ru.example.megamarket.token.TokenType;
 import ru.example.megamarket.user.Role;
 import ru.example.megamarket.user.User;
 import ru.example.megamarket.user.UserRepository;
+import ru.example.megamarket.user.UserStatus;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -36,6 +38,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .userStatus(UserStatus.ACTIVE)
                 .registrationDate(LocalDateTime.now())
                 .balance(0)
                 .build();
@@ -62,6 +65,9 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
+        if (user.getUserStatus().equals(UserStatus.BAN)) {
+            throw new UserBanException("Вы забанены");
+        }
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
