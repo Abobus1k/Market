@@ -7,9 +7,9 @@
     <!-- Миграция для создания нескольких стандартных Crops -->
     <changeSet id="Create standard admins" author="aobubu">
         <sql>
-            INSERT INTO users (firstname, lastname, email, password, registration_date, balance, rating, role, status)
-            VALUES ('Ivan', 'Ginkin', 'nelox@mail.ru', '$2a$10$ei5G8di4oWR9GCqsyJCtxehBHqkoptwDGUOnp8s0HLBQjNPKQuMkm', '2023-11-10 00:00:00', 100000, 5, 'ADMIN', 'ACTIVE'),
-                   ('Ivan', 'Galushin', 'lox@mail.ru', '$2a$10$Wq9LSWWYg4R.PAi9ME6bk.1Dl5p0L9h8CUBqjNo8GHKbbpWv336Vu', '2023-11-10 00:00:00', 100000, 0, 'ADMIN', 'ACTIVE')
+            INSERT INTO users (firstname, lastname, email, password, registration_date, balance, rating, role, status, phone)
+            VALUES ('Ivan', 'Ginkin', 'ginkin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5, 'ADMIN', 'ACTIVE', '+79621740120'),
+                   ('Ivan', 'Galushin', 'galushin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5, 'ADMIN', 'ACTIVE', '+79966368841')
         </sql>
     </changeSet>
 </databaseChangeLog>

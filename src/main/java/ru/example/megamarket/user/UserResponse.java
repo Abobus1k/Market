@@ -22,4 +22,6 @@ public class UserResponse {
     private Integer rating;
     private Role role;
     private UserStatus userStatus;
+    private String phone;
+    private String image;
 }

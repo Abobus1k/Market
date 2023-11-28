@@ -51,6 +51,12 @@ public class User implements UserDetails {
     @Column(name = "status")
     private UserStatus userStatus;
 
+    @Column(name = "phone")
+    private String phone;
+
+    @Column(name = "image")
+    private String image;
+
     @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
     private List<Token> tokens;
 

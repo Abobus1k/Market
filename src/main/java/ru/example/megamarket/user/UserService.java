@@ -48,6 +48,10 @@ public class UserService {
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        if (request.getImage() != null) {
+            user.setImage(request.getImage());
+        }
+        user.setPhone(request.getPhone());
         return repository.save(user);
     }
 

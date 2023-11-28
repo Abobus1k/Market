@@ -28,4 +28,9 @@ public class RegisterRequest {
     @NotEmpty(message = "Не заполнен пароль")
     @Size(min = 8, message = "Длина пароля должна быть не менее 8")
     String password;
+
+    @NotEmpty(message = "Не заполнен телефон")
+    @Size(min = 12, max = 12, message = "Недопустимая длина телефона")
+    @Pattern(regexp = "\\+7\\d{10}")
+    private String phone;
 }

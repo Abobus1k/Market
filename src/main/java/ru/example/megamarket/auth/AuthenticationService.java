@@ -41,6 +41,7 @@ public class AuthenticationService {
                 .userStatus(UserStatus.ACTIVE)
                 .registrationDate(LocalDateTime.now())
                 .balance(0)
+                .phone(request.getPhone())
                 .build();
         if (user.getEmail().equals("admin@mail.com")) {
             user.setRole(Role.ADMIN);
