@@ -66,6 +66,12 @@ public class ReviewService {
 
         User seller = review.getSeller();
         Integer numberOfSellerReviews = repository.findBySeller(seller).size();
+        if (numberOfSellerReviews == 1) {
+            seller.setRating(null);
+            userRepository.save(seller);
+            repository.delete(review);
+            return;
+        }
         seller.setRating((seller.getRating() * numberOfSellerReviews - review.getRating()) / (numberOfSellerReviews - 1));
         userRepository.save(seller);
         repository.delete(review);
