@@ -27,7 +27,7 @@
             <column name="balance" type="integer">
                 <constraints nullable="false" unique="false"/>
             </column>
-            <column name="rating" type="integer">
+            <column name="rating" type="double">
                 <constraints nullable="true" unique="false"/>
             </column>
             <column name="role" type="varchar(50)">

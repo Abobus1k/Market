@@ -8,8 +8,8 @@
     <changeSet id="Create standard admins" author="aobubu">
         <sql>
             INSERT INTO users (firstname, lastname, email, password, registration_date, balance, rating, role, status, phone)
-            VALUES ('Ivan', 'Ginkin', 'ginkin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5, 'ADMIN', 'ACTIVE', '+79621740120'),
-                   ('Ivan', 'Galushin', 'galushin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5, 'ADMIN', 'ACTIVE', '+79966368841')
+            VALUES ('Ivan', 'Ginkin', 'ginkin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5.0, 'ADMIN', 'ACTIVE', '+79621740120'),
+                   ('Ivan', 'Galushin', 'galushin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5.0, 'ADMIN', 'ACTIVE', '+79966368841')
         </sql>
     </changeSet>
 </databaseChangeLog>

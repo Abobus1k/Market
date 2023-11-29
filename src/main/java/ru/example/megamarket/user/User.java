@@ -41,7 +41,7 @@ public class User implements UserDetails {
     @Column(name = "balance")
     private Integer balance;
     @Column(name = "rating")
-    private Integer rating;
+    private Double rating;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")

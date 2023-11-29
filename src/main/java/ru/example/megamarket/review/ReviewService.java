@@ -39,7 +39,7 @@ public class ReviewService {
         }
 
         if (seller.getRating() == null) {
-            seller.setRating(0);
+            seller.setRating(1.0);
         }
 
         Integer numberOfSellerReviews = repository.findBySeller(seller).size();
@@ -61,7 +61,13 @@ public class ReviewService {
     }
 
     public void deleteReview(Integer reviewId) {
-        repository.delete(repository.findById(reviewId)
-                .orElseThrow(() -> new EntityNotFoundException("Отыва с id: " + reviewId + " не существует")));
+        Review review = repository.findById(reviewId)
+                .orElseThrow(() -> new EntityNotFoundException("Отыва с id: " + reviewId + " не существует"));
+
+        User seller = review.getSeller();
+        Integer numberOfSellerReviews = repository.findBySeller(seller).size();
+        seller.setRating((seller.getRating() * numberOfSellerReviews - review.getRating()) / (numberOfSellerReviews - 1));
+        userRepository.save(seller);
+        repository.delete(review);
     }
 }

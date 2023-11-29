@@ -19,7 +19,7 @@ public class UserResponse {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registrationDate;
     private Long balance;
-    private Integer rating;
+    private Double rating;
     private Role role;
     private UserStatus userStatus;
     private String phone;
