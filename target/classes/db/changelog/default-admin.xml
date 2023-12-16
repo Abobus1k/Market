@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <!-- Миграция для создания нескольких стандартных Crops -->
+    <changeSet id="Create standard admins" author="aobubu">
+        <sql>
+            INSERT INTO users (firstname, lastname, email, password, registration_date, balance, rating, role, status, phone)
+            VALUES ('Ivan', 'Ginkin', 'ginkin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5.0, 'ADMIN', 'ACTIVE', '+79621740120'),
+                   ('Ivan', 'Galushin', 'galushin@mail.ru', '$2a$10$0TXkPhQIjlrib7mluDM0UOhdvUK4ricwn7OwSNBTyHIQ5ZuB1eIwm', '2023-11-10 00:00:00', 100000, 5.0, 'ADMIN', 'ACTIVE', '+79966368841')
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/table-users.xml
+  - include:
+      file: db/changelog/table-tokens.xml
+  - include:
+      file: db/changelog/table-category.xml
+  - include:
+      file: db/changelog/table-deposits.xml
+  - include:
+      file: db/changelog/table-withdraws.xml
+  - include:
+      file: db/changelog/table-listings.xml
+  - include:
+      file: db/changelog/table-order.xml
+  - include:
+      file: db/changelog/table-review.xml
+  - include:
+      file: db/changelog/table-image.xml
+  - include:
+      file: db/changelog/default-admin.xml
+  - include:
+      file: db/changelog/default-categories.xml

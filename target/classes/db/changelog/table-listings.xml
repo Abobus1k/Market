@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="Create listings table" author="aobubu">
+        <createTable tableName="listings">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="listing_id"/>
+            </column>
+            <column name="user_id" type="integer">
+                <constraints nullable="false" foreignKeyName="fr_user_listing" references="users(id)"/>
+            </column>
+            <column name="category_id" type="integer">
+                <constraints nullable="false" foreignKeyName="fr_category_listing" references="categories(id)"/>
+            </column>
+            <column name="title" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="text" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_date" type="timestamp">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="sold" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="listing_status" type="varchar(16)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

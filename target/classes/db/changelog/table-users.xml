@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="Create users table" author="aobubu">
+        <createTable tableName="users">
+            <column name="id" type="integer" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="user_id" unique="true"/>
+            </column>
+            <column name="firstname" type="varchar(50)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="lastname" type="varchar(50)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="text">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="registration_date" type="timestamp">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="balance" type="integer">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="rating" type="double">
+                <constraints nullable="true" unique="false"/>
+            </column>
+            <column name="role" type="varchar(50)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="status" type="varchar(10)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="phone" type="varchar(12)">
+                <constraints nullable="false" unique="false"/>
+            </column>
+            <column name="image" type="varchar(256)">
+                <constraints nullable="true" unique="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
